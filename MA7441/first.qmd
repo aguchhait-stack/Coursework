@@ -1,0 +1,37 @@
+---
+title: "My First Quarto Document"
+date: "`r Sys.Date()`"
+format: html
+
+---
+# Arithmetics
+```{r}
+2+2
+sqrt(16)
+```
+### Variables
+```{r}
+x<-10
+y<-20
+x+y
+```
+### Vectors
+```{r}
+prices <-c(50,27,73,45,67)
+sum(prices)
+```
+### Dataframe
+```{r}
+students <-data.frame(names=c('Alic','Bob','Carol'),scores=c(88,92,75))
+mean(students$scores)
+```
+### A Plot
+```{r}
+plot(students$scores,main='Student Scores',ylab='score',xlab='Student')
+```
+### Matrix
+```{r}
+matrix=matrix(1:9,ncol=3,byrow=TRUE,dimnames = list(c('x1','x2','x3'),c('y1','y2','y3')))
+matrix
+```
+
