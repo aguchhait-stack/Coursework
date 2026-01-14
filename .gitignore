@@ -1,14 +1,15 @@
 # 1. Ignore everything
 *
 
-# 2. Allow the essentials
+# 2. Allow your modules
 !.gitignore
 !MA*
 !MA*/**
 
-# 3. Block the "Junk" (even inside MA folders)
-.Rproj.user/
-.Rhistory
-.RData
-.DS_Store
-.ipynb_checkpoints/
+# 3. BUT ignore the junk INSIDE those modules
+**/.Rproj.user/
+**/.Rhistory
+**/.RData
+**/.DS_Store
+**/.ipynb_checkpoints/
+**/_files/
