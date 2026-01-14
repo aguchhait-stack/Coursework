@@ -1,1 +1,7 @@
-# Masters Coursework\n\nThis repository contains my academic work for my Masters modules:\n- MA7202\n- MA7419\n- MA7441
+# Masters Coursework
+
+This repository contains my academic work for my Masters modules:
+
+* MA7202
+* MA7419
+* MA7441
