@@ -2,6 +2,6 @@
 
 This repository contains my academic work for my Masters modules:
 
-* MA7202
-* MA7419
-* MA7441
+* **MA7202**: Introduction to Functional Data Analysis
+* **MA7419**: Fundamentals of Data Science
+* **MA7441**: Overview of Data Science Practice
