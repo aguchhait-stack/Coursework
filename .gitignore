@@ -1,5 +1,10 @@
+# Ignore everything by default
 *
+
+# Always keep gitignore itself
 !.gitignore
-!python_practise/
-!python_practise/README.md
-!python_practise/number_checker.ipynb
+
+# Allow ONLY files and folders starting with MA
+!MA*
+!MA*/**
+
