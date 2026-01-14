@@ -1,11 +1,14 @@
-# Ignore everything by default
+# 1. Ignore everything
 *
 
-# Always keep gitignore itself
+# 2. Allow the essentials
 !.gitignore
-
-# Allow ONLY files and folders starting with MA
 !MA*
 !MA*/**
 
-.Rproj.user
+# 3. Block the "Junk" (even inside MA folders)
+.Rproj.user/
+.Rhistory
+.RData
+.DS_Store
+.ipynb_checkpoints/

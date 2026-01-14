@@ -1,6 +1,0 @@
-"0","students <-data.frame(names=c('Alic','Bob','Carol'),scores=c(88,92,75))"
-"0","mean(students$scores)"
-"1","[1]"
-"1"," 85"
-"1","
-"
