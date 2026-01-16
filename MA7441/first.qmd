@@ -1,7 +1,9 @@
 ---
 title: "My First Quarto Document"
 date: "`r Sys.Date()`"
-format: html
+format:
+  html: default
+  pdf: default
 
 ---
 # Arithmetics
