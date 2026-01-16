@@ -44,5 +44,13 @@ plot(growth$age, girl1, type="o",
      main="Growth curve for girl01")
 View(growth)
 growth$age
-
-
+m1 <- matrix(1:4,2,2)
+m2 <- matrix(5:8,2,2)
+add <- m1+m2
+sub <- m1-m2
+list(add,sub)
+mat2 <- matrix(c(1,2,3,4),2,2)
+trans <- t(mat2)
+trans
+inverse <- solve(mat2)
+inverse
