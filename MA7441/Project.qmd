@@ -1,0 +1,69 @@
+---
+title: "UK Road Safety: Collisions"
+subtitle: "ods-team-01"
+author: "Arijit Guchhait"
+date: today
+format:
+  html: default
+---
+### Importing Library
+```{r}
+#| label: setup
+#| message: false
+library(tidyverse)
+library(readxl)
+library(dplyr)
+```
+### Read Data
+```{r}
+#| label: read data
+#| message: false
+df <- read_csv('/Users/arijitguchhait/Desktop/mydb/MA7441/Data/dft-road-casualty-statistics-collision-provisional-2025.csv')
+glimpse(df)
+```
+### EDA
+```{r}
+#| label: EDA
+## Missing Value
+colSums(is.na(df))[colSums(is.na(df))>0]
+## Dublicate
+df[duplicated(df),] ### Zero duplicate
+df$date <- as.Date(df$date,format="%d/%m/%Y")
+df$time <- as.integer(substr(df$time,1,2))
+df$month <- as.numeric(format(df$date,"%m"))
+```
+# What proportion of collisions occur under different weather and light conditions?
+```{r}
+#| label: weather_light
+table(df$weather_conditions)
+table(df$light_conditions)
+df$weather_conditions_labels <- factor(df$weather_conditions,
+                                      levels = c(1,2,3,4,5,6,7,8,9,-1),
+                                      labels=c("fine",
+                                               "raining",
+                                               "snowing",
+                                               "others",
+                                               "others",
+                                               "others",
+                                               "others",
+                                               "others",
+                                               "others",
+                                               "n/a"))
+df$light_conditions_labels <- factor(df$light_conditions,
+                                     levels = c(1,4,5,6,7,-1),
+                                     labels=c("daylight",
+                                              "darkness_with_lights",
+                                              "darkness",
+                                              "darkness",
+                                              "darkness_unknown",
+                                              "n/a"))
+table(df$weather_conditions_labels)  
+table(df$light_conditions_labels)
+df %>%
+  filter(light_conditions_labels !='n/a' & weather_conditions_labels!='n/a') %>% 
+  ggplot(aes(x = weather_conditions_labels, fill = light_conditions_labels)) + 
+  geom_bar(position="fill")+scale_y_continuous(labels = scales::percent)+
+  labs(x="Weather Condition",y="Proportion of Collisions",fill="Light Conditions",
+       title="Weather and Light conditions for collisions")
+```
+

@@ -3,9 +3,12 @@
 # 1.2- How does reported collision severity vary by road type and speed limit?
 # 1.3- Are collisions more common at junctions or on non-junction road segments?
 # 1.4- How does the number of collisions vary geographically across police force areas?
+# Load package
 library(dplyr)
 library(ggplot2)
-df <- read.csv('Data/dft-road-casualty-statistics-collision-provisional-2025.csv')
+library(readr)
+df <- read_csv('/Users/arijitguchhait/Desktop/mydb/MA7441/Data/dft-road-casualty-statistics-collision-provisional-2025.csv')
+View(df)
 ## Missing Value
 colSums(is.na(df))[colSums(is.na(df))>0]
 ## Dublicate
