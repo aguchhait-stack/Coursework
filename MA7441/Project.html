@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arijit Guchhait">
-<meta name="dcterms.date" content="2026-01-18">
+<meta name="dcterms.date" content="2026-01-20">
 
 <title>UK Road Safety: Collisions</title>
 <style>
@@ -71,15 +71,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="Project_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="Project_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Project_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Project_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Project_files/libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Project_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="Project_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Project.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -102,7 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 18, 2026</p>
+      <p class="date">January 20, 2026</p>
     </div>
   </div>
   
@@ -114,158 +117,174 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="importing-library" class="level3">
-<h3 class="anchored" data-anchor-id="importing-library">Importing Library</h3>
+<section id="data-wrangling" class="level1">
+<h1>1. Data Wrangling</h1>
+<section id="load-package" class="level3">
+<h3 class="anchored" data-anchor-id="load-package">1.1 Load Package</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.6
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.1     ✔ tibble    3.3.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.2
+✔ purrr     1.2.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="read-data" class="level3">
-<h3 class="anchored" data-anchor-id="read-data">Read Data</h3>
+<section id="read-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="read-the-data">1.2 Read the Data</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'/Users/arijitguchhait/Desktop/mydb/MA7441/Data/dft-road-casualty-statistics-collision-provisional-2025.csv'</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-collision-provisional-2025.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="inspect-the-structure-and-display-5-rows" class="level3">
+<h3 class="anchored" data-anchor-id="inspect-the-structure-and-display-5-rows">1.3 Inspect the structure and display 5 rows</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 48,472
-Columns: 44
-$ collision_index                                  &lt;chr&gt; "2025010551784", "202…
-$ collision_year                                   &lt;dbl&gt; 2025, 2025, 2025, 202…
-$ collision_ref_no                                 &lt;chr&gt; "010551784", "0105517…
-$ location_easting_osgr                            &lt;dbl&gt; 528234, 529585, 52476…
-$ location_northing_osgr                           &lt;dbl&gt; 185607, 178570, 18796…
-$ longitude                                        &lt;dbl&gt; -0.15174, -0.13485, -…
-$ latitude                                         &lt;dbl&gt; 51.55478, 51.49124, 5…
-$ police_force                                     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, …
-$ collision_severity                               &lt;dbl&gt; 3, 3, 3, 2, 2, 2, 3, …
-$ number_of_vehicles                               &lt;dbl&gt; 3, 2, 5, 1, 2, 3, 1, …
-$ number_of_casualties                             &lt;dbl&gt; 1, 1, 1, 2, 1, 1, 1, …
-$ date                                             &lt;chr&gt; "01/01/2025", "01/01/…
-$ day_of_week                                      &lt;dbl&gt; 4, 4, 4, 4, 4, 4, 4, …
-$ time                                             &lt;time&gt; 00:04:00, 00:04:00, …
-$ local_authority_district                         &lt;dbl&gt; -1, -1, -1, -1, -1, -…
-$ local_authority_ons_district                     &lt;chr&gt; "E09000007", "E090000…
-$ local_authority_highway                          &lt;chr&gt; "E09000007", "E090000…
-$ local_authority_highway_current                  &lt;chr&gt; "E09000007", "E090000…
-$ first_road_class                                 &lt;dbl&gt; 4, 3, 6, 5, 3, 6, 3, …
-$ first_road_number                                &lt;dbl&gt; 518, 202, 0, 0, 107, …
-$ road_type                                        &lt;dbl&gt; 6, 6, 6, 6, 6, 2, 6, …
-$ speed_limit                                      &lt;dbl&gt; 20, 20, 30, 20, 20, 2…
-$ junction_detail_historic                         &lt;dbl&gt; 3, -1, 0, 9, 3, 0, -1…
-$ junction_detail                                  &lt;dbl&gt; 13, -1, 0, 19, 13, 0,…
-$ junction_control                                 &lt;dbl&gt; 4, 4, -1, 4, 2, -1, 2…
-$ second_road_class                                &lt;dbl&gt; 5, 6, 0, 6, 4, 0, 3, …
-$ second_road_number                               &lt;dbl&gt; 0, 0, -1, 0, 118, -1,…
-$ pedestrian_crossing_human_control_historic       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, …
-$ pedestrian_crossing_physical_facilities_historic &lt;dbl&gt; 0, 5, 0, 1, 5, 0, 1, …
-$ pedestrian_crossing                              &lt;dbl&gt; 0, 15, 0, 13, 15, 0, …
-$ light_conditions                                 &lt;dbl&gt; 4, 4, 4, 4, 4, 4, 4, …
-$ weather_conditions                               &lt;dbl&gt; 1, 1, 4, 4, 4, 8, 1, …
-$ road_surface_conditions                          &lt;dbl&gt; 1, 1, 1, 2, 1, 1, 1, …
-$ special_conditions_at_site                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, …
-$ carriageway_hazards_historic                     &lt;dbl&gt; 0, 0, 0, 2, 0, 0, 0, …
-$ carriageway_hazards                              &lt;dbl&gt; 0, 0, 0, 17, 0, 0, 0,…
-$ urban_or_rural_area                              &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, …
-$ did_police_officer_attend_scene_of_accident      &lt;dbl&gt; 1, 3, 1, 1, 1, 1, 1, …
-$ trunk_road_flag                                  &lt;dbl&gt; -1, -1, -1, -1, -1, -…
-$ lsoa_of_accident_location                        &lt;chr&gt; "E01000886", "E010047…
-$ enhanced_severity_collision                      &lt;dbl&gt; -1, -1, -1, -1, -1, -…
-$ collision_injury_based                           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, …
-$ collision_adjusted_severity_serious              &lt;dbl&gt; 0, 0, 0, 1, 1, 1, 0, …
-$ collision_adjusted_severity_slight               &lt;dbl&gt; 1, 1, 1, 0, 0, 0, 1, …</code></pre>
+<pre><code>'data.frame':   48472 obs. of  44 variables:
+ $ collision_index                                 : chr  "2025010551784" "2025010551786" "2025010551792" "2025010551794" ...
+ $ collision_year                                  : int  2025 2025 2025 2025 2025 2025 2025 2025 2025 2025 ...
+ $ collision_ref_no                                : chr  "010551784" "010551786" "010551792" "010551794" ...
+ $ location_easting_osgr                           : int  528234 529585 524767 527549 534910 531944 533436 530137 540095 523634 ...
+ $ location_northing_osgr                          : int  185607 178570 187961 184185 183108 167395 182672 186351 173854 173954 ...
+ $ longitude                                       : num  -0.1517 -0.1348 -0.2009 -0.1621 -0.0565 ...
+ $ latitude                                        : num  51.6 51.5 51.6 51.5 51.5 ...
+ $ police_force                                    : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ collision_severity                              : int  3 3 3 2 2 2 3 3 3 3 ...
+ $ number_of_vehicles                              : int  3 2 5 1 2 3 1 2 2 1 ...
+ $ number_of_casualties                            : int  1 1 1 2 1 1 1 2 3 1 ...
+ $ date                                            : chr  "01/01/2025" "01/01/2025" "01/01/2025" "01/01/2025" ...
+ $ day_of_week                                     : int  4 4 4 4 4 4 4 4 4 4 ...
+ $ time                                            : chr  "00:04" "00:04" "01:35" "00:13" ...
+ $ local_authority_district                        : int  -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
+ $ local_authority_ons_district                    : chr  "E09000007" "E09000033" "E09000003" "E09000007" ...
+ $ local_authority_highway                         : chr  "E09000007" "E09000033" "E09000003" "E09000007" ...
+ $ local_authority_highway_current                 : chr  "E09000007" "E09000033" "E09000003" "E09000007" ...
+ $ first_road_class                                : int  4 3 6 5 3 6 3 3 3 3 ...
+ $ first_road_number                               : int  518 202 0 0 107 0 10 1 205 219 ...
+ $ road_type                                       : int  6 6 6 6 6 2 6 6 3 3 ...
+ $ speed_limit                                     : int  20 20 30 20 20 20 20 20 40 30 ...
+ $ junction_detail_historic                        : int  3 -1 0 9 3 0 -1 3 -1 0 ...
+ $ junction_detail                                 : int  13 -1 0 19 13 0 -1 13 -1 0 ...
+ $ junction_control                                : int  4 4 -1 4 2 -1 2 4 2 -1 ...
+ $ second_road_class                               : int  5 6 0 6 4 0 3 3 3 0 ...
+ $ second_road_number                              : int  0 0 -1 0 118 -1 1208 1 2212 -1 ...
+ $ pedestrian_crossing_human_control_historic      : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ pedestrian_crossing_physical_facilities_historic: int  0 5 0 1 5 0 1 0 0 0 ...
+ $ pedestrian_crossing                             : int  0 15 0 13 15 0 13 0 0 0 ...
+ $ light_conditions                                : int  4 4 4 4 4 4 4 4 4 6 ...
+ $ weather_conditions                              : int  1 1 4 4 4 8 1 4 1 4 ...
+ $ road_surface_conditions                         : int  1 1 1 2 1 1 1 1 1 1 ...
+ $ special_conditions_at_site                      : int  0 0 0 0 0 0 0 0 4 0 ...
+ $ carriageway_hazards_historic                    : int  0 0 0 2 0 0 0 0 0 0 ...
+ $ carriageway_hazards                             : int  0 0 0 17 0 0 0 0 13 0 ...
+ $ urban_or_rural_area                             : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ did_police_officer_attend_scene_of_accident     : int  1 3 1 1 1 1 1 1 1 1 ...
+ $ trunk_road_flag                                 : int  -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
+ $ lsoa_of_accident_location                       : chr  "E01000886" "E01004747" "E01000216" "E01000967" ...
+ $ enhanced_severity_collision                     : int  -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
+ $ collision_injury_based                          : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ collision_adjusted_severity_serious             : num  0 0 0 1 1 1 0 0 0 0 ...
+ $ collision_adjusted_severity_slight              : num  1 1 1 0 0 0 1 1 1 1 ...</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df,<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["collision_index"],"name":[1],"type":["chr"],"align":["left"]},{"label":["collision_year"],"name":[2],"type":["int"],"align":["right"]},{"label":["collision_ref_no"],"name":[3],"type":["chr"],"align":["left"]},{"label":["location_easting_osgr"],"name":[4],"type":["int"],"align":["right"]},{"label":["location_northing_osgr"],"name":[5],"type":["int"],"align":["right"]},{"label":["longitude"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["latitude"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["police_force"],"name":[8],"type":["int"],"align":["right"]},{"label":["collision_severity"],"name":[9],"type":["int"],"align":["right"]},{"label":["number_of_vehicles"],"name":[10],"type":["int"],"align":["right"]},{"label":["number_of_casualties"],"name":[11],"type":["int"],"align":["right"]},{"label":["date"],"name":[12],"type":["chr"],"align":["left"]},{"label":["day_of_week"],"name":[13],"type":["int"],"align":["right"]},{"label":["time"],"name":[14],"type":["chr"],"align":["left"]},{"label":["local_authority_district"],"name":[15],"type":["int"],"align":["right"]},{"label":["local_authority_ons_district"],"name":[16],"type":["chr"],"align":["left"]},{"label":["local_authority_highway"],"name":[17],"type":["chr"],"align":["left"]},{"label":["local_authority_highway_current"],"name":[18],"type":["chr"],"align":["left"]},{"label":["first_road_class"],"name":[19],"type":["int"],"align":["right"]},{"label":["first_road_number"],"name":[20],"type":["int"],"align":["right"]},{"label":["road_type"],"name":[21],"type":["int"],"align":["right"]},{"label":["speed_limit"],"name":[22],"type":["int"],"align":["right"]},{"label":["junction_detail_historic"],"name":[23],"type":["int"],"align":["right"]},{"label":["junction_detail"],"name":[24],"type":["int"],"align":["right"]},{"label":["junction_control"],"name":[25],"type":["int"],"align":["right"]},{"label":["second_road_class"],"name":[26],"type":["int"],"align":["right"]},{"label":["second_road_number"],"name":[27],"type":["int"],"align":["right"]},{"label":["pedestrian_crossing_human_control_historic"],"name":[28],"type":["int"],"align":["right"]},{"label":["pedestrian_crossing_physical_facilities_historic"],"name":[29],"type":["int"],"align":["right"]},{"label":["pedestrian_crossing"],"name":[30],"type":["int"],"align":["right"]},{"label":["light_conditions"],"name":[31],"type":["int"],"align":["right"]},{"label":["weather_conditions"],"name":[32],"type":["int"],"align":["right"]},{"label":["road_surface_conditions"],"name":[33],"type":["int"],"align":["right"]},{"label":["special_conditions_at_site"],"name":[34],"type":["int"],"align":["right"]},{"label":["carriageway_hazards_historic"],"name":[35],"type":["int"],"align":["right"]},{"label":["carriageway_hazards"],"name":[36],"type":["int"],"align":["right"]},{"label":["urban_or_rural_area"],"name":[37],"type":["int"],"align":["right"]},{"label":["did_police_officer_attend_scene_of_accident"],"name":[38],"type":["int"],"align":["right"]},{"label":["trunk_road_flag"],"name":[39],"type":["int"],"align":["right"]},{"label":["lsoa_of_accident_location"],"name":[40],"type":["chr"],"align":["left"]},{"label":["enhanced_severity_collision"],"name":[41],"type":["int"],"align":["right"]},{"label":["collision_injury_based"],"name":[42],"type":["int"],"align":["right"]},{"label":["collision_adjusted_severity_serious"],"name":[43],"type":["dbl"],"align":["right"]},{"label":["collision_adjusted_severity_slight"],"name":[44],"type":["dbl"],"align":["right"]}],"data":[{"1":"2025010551784","2":"2025","3":"010551784","4":"528234","5":"185607","6":"-0.15174","7":"51.55478","8":"1","9":"3","10":"3","11":"1","12":"01/01/2025","13":"4","14":"00:04","15":"-1","16":"E09000007","17":"E09000007","18":"E09000007","19":"4","20":"518","21":"6","22":"20","23":"3","24":"13","25":"4","26":"5","27":"0","28":"0","29":"0","30":"0","31":"4","32":"1","33":"1","34":"0","35":"0","36":"0","37":"1","38":"1","39":"-1","40":"E01000886","41":"-1","42":"0","43":"0","44":"1","_rn_":"1"},{"1":"2025010551786","2":"2025","3":"010551786","4":"529585","5":"178570","6":"-0.13485","7":"51.49124","8":"1","9":"3","10":"2","11":"1","12":"01/01/2025","13":"4","14":"00:04","15":"-1","16":"E09000033","17":"E09000033","18":"E09000033","19":"3","20":"202","21":"6","22":"20","23":"-1","24":"-1","25":"4","26":"6","27":"0","28":"0","29":"5","30":"15","31":"4","32":"1","33":"1","34":"0","35":"0","36":"0","37":"1","38":"3","39":"-1","40":"E01004747","41":"-1","42":"0","43":"0","44":"1","_rn_":"2"},{"1":"2025010551792","2":"2025","3":"010551792","4":"524767","5":"187961","6":"-0.20089","7":"51.57671","8":"1","9":"3","10":"5","11":"1","12":"01/01/2025","13":"4","14":"01:35","15":"-1","16":"E09000003","17":"E09000003","18":"E09000003","19":"6","20":"0","21":"6","22":"30","23":"0","24":"0","25":"-1","26":"0","27":"-1","28":"0","29":"0","30":"0","31":"4","32":"4","33":"1","34":"0","35":"0","36":"0","37":"1","38":"1","39":"-1","40":"E01000216","41":"-1","42":"0","43":"0","44":"1","_rn_":"3"},{"1":"2025010551794","2":"2025","3":"010551794","4":"527549","5":"184185","6":"-0.16213","7":"51.54216","8":"1","9":"2","10":"1","11":"2","12":"01/01/2025","13":"4","14":"00:13","15":"-1","16":"E09000007","17":"E09000007","18":"E09000007","19":"5","20":"0","21":"6","22":"20","23":"9","24":"19","25":"4","26":"6","27":"0","28":"0","29":"1","30":"13","31":"4","32":"4","33":"2","34":"0","35":"2","36":"17","37":"1","38":"1","39":"-1","40":"E01000967","41":"-1","42":"0","43":"1","44":"0","_rn_":"4"},{"1":"2025010551795","2":"2025","3":"010551795","4":"534910","5":"183108","6":"-0.05647","7":"51.53077","8":"1","9":"2","10":"2","11":"1","12":"01/01/2025","13":"4","14":"01:04","15":"-1","16":"E09000030","17":"E09000030","18":"E09000030","19":"3","20":"107","21":"6","22":"20","23":"3","24":"13","25":"2","26":"4","27":"118","28":"0","29":"5","30":"15","31":"4","32":"4","33":"1","34":"0","35":"0","36":"0","37":"1","38":"1","39":"-1","40":"E01004198","41":"-1","42":"0","43":"1","44":"0","_rn_":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
-<section id="eda" class="level3">
-<h3 class="anchored" data-anchor-id="eda">EDA</h3>
+</section>
+<section id="removing-missing-values" class="level1">
+<h1>1.4 Removing Missing Values</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Missing Value</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(df))[<span class="fu">colSums</span>(<span class="fu">is.na</span>(df))<span class="sc">&gt;</span><span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>          location_easting_osgr          location_northing_osgr 
-                              1                               1 
-                      longitude                        latitude 
-                              1                               1 
-local_authority_highway_current 
-                              3 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Dublicate</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df[<span class="fu">duplicated</span>(df),] <span class="do">### Zero duplicate</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 0 × 44
-# ℹ 44 variables: collision_index &lt;chr&gt;, collision_year &lt;dbl&gt;,
-#   collision_ref_no &lt;chr&gt;, location_easting_osgr &lt;dbl&gt;,
-#   location_northing_osgr &lt;dbl&gt;, longitude &lt;dbl&gt;, latitude &lt;dbl&gt;,
-#   police_force &lt;dbl&gt;, collision_severity &lt;dbl&gt;, number_of_vehicles &lt;dbl&gt;,
-#   number_of_casualties &lt;dbl&gt;, date &lt;chr&gt;, day_of_week &lt;dbl&gt;, time &lt;time&gt;,
-#   local_authority_district &lt;dbl&gt;, local_authority_ons_district &lt;chr&gt;,
-#   local_authority_highway &lt;chr&gt;, local_authority_highway_current &lt;chr&gt;, …</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(df<span class="sc">$</span>date,<span class="at">format=</span><span class="st">"%d/%m/%Y"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">substr</span>(df<span class="sc">$</span>time,<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>month <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">format</span>(df<span class="sc">$</span>date,<span class="st">"%m"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">any</span>(<span class="fu">colSums</span>(<span class="fu">is.na</span>(df))<span class="sc">&gt;</span><span class="dv">0</span>)) df_clean <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(df) <span class="cf">else</span> df_clean <span class="ot">&lt;-</span> df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="what-proportion-of-collisions-occur-under-different-weather-and-light-conditions" class="level1">
-<h1>What proportion of collisions occur under different weather and light conditions?</h1>
+<section id="removing-dublicates" class="level1">
+<h1>1.5 Removing Dublicates</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>weather_conditions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_clean<span class="ot">=</span><span class="fu">unique</span>(df_clean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="standarise-colums-and-feature-new-month-column" class="level1">
+<h1>1.6 Standarise Colums and Feature new month column</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_clean <span class="ot">&lt;-</span> df_clean <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">date=</span><span class="fu">as.Date</span>(date,<span class="at">format=</span><span class="st">"%d/%m/%Y"</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">month=</span><span class="fu">as.numeric</span>(<span class="fu">format</span>(date,<span class="st">"%m"</span>)),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  hour <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">substr</span>(time,<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>#Visulizations ### What proportion of collisions occur under different weather and light conditions?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_clean<span class="sc">$</span>weather_conditions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
    -1     1     2     3     4     5     6     7     8     9 
-  422 41343  3088   210   255   225    11   158  1597  1163 </code></pre>
+  422 41342  3088   210   255   225    11   158  1597  1163 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>light_conditions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_clean<span class="sc">$</span>light_conditions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
    -1     1     4     5     6     7 
-  307 36272  8626   284  2305   678 </code></pre>
+  307 36271  8626   284  2305   678 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>weather_conditions_labels <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>weather_conditions,</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"fine"</span>,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"raining"</span>,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"snowing"</span>,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"others"</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"others"</span>,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"others"</span>,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"others"</span>,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"others"</span>,</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"others"</span>,</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"n/a"</span>))</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>light_conditions_labels <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>light_conditions,</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"daylight"</span>,</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"darkness_with_lights"</span>,</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"darkness"</span>,</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"darkness"</span>,</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"darkness_unknown"</span>,</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"n/a"</span>))</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>weather_conditions_labels)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_clean<span class="sc">$</span>weather_conditions_labels <span class="ot">&lt;-</span> <span class="fu">factor</span>(df_clean<span class="sc">$</span>weather_conditions,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"fine"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"raining"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"snowing"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"others"</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"others"</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"others"</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"others"</span>,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"others"</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"others"</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"n/a"</span>))</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>df_clean<span class="sc">$</span>light_conditions_labels <span class="ot">&lt;-</span> <span class="fu">factor</span>(df_clean<span class="sc">$</span>light_conditions,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"daylight"</span>,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"darkness_with_lights"</span>,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"darkness"</span>,</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"darkness"</span>,</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"darkness_unknown"</span>,</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">"n/a"</span>))</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_clean<span class="sc">$</span>weather_conditions_labels)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
    fine raining snowing  others     n/a 
-  41343    3088     210    3409     422 </code></pre>
+  41342    3088     210    3409     422 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>light_conditions_labels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_clean<span class="sc">$</span>light_conditions_labels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
             daylight darkness_with_lights             darkness 
-               36272                 8626                 2589 
+               36271                 8626                 2589 
     darkness_unknown                  n/a 
                  678                  307 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(light_conditions_labels <span class="sc">!=</span><span class="st">'n/a'</span> <span class="sc">&amp;</span> weather_conditions_labels<span class="sc">!=</span><span class="st">'n/a'</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> weather_conditions_labels, <span class="at">fill =</span> light_conditions_labels)) <span class="sc">+</span> </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">"fill"</span>)<span class="sc">+</span><span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent)<span class="sc">+</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Weather Condition"</span>,<span class="at">y=</span><span class="st">"Proportion of Collisions"</span>,<span class="at">fill=</span><span class="st">"Light Conditions"</span>,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Weather and Light conditions for collisions"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df_clean<span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(light_conditions_labels <span class="sc">!=</span><span class="st">'n/a'</span> <span class="sc">&amp;</span> weather_conditions_labels<span class="sc">!=</span><span class="st">'n/a'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> weather_conditions_labels, <span class="at">fill =</span> light_conditions_labels)) <span class="sc">+</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">"fill"</span>)<span class="sc">+</span><span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent)<span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Weather Condition"</span>,<span class="at">y=</span><span class="st">"Proportion of Collisions"</span>,<span class="at">fill=</span><span class="st">"Light Conditions"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Weather and Light conditions for collisions"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Project_files/figure-html/weather_light-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Project_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

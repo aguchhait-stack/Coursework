@@ -1,0 +1,15 @@
+---
+title: "Week 2 – Wrangling & Descriptive Stats"
+author: "Arijit Guchhait"
+format:
+  html: default
+  pdf: default
+---
+# Load the dataset
+```{r}
+data <- read.csv("Data/student_registrations.csv")
+head(data,5)
+```
+```{r}
+
+```
